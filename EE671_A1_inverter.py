@@ -51,15 +51,16 @@ c2 z vss 0.576f
 * the voltage source:
 Vdd vdd gnd DC 1.8
 Xnot1 in vdd gnd out not1
-
-* dc analysis
-V1 in 0 DC 0
-.dc V1 0 1.8 0.01
+Xnot2 out vdd gnd out2 not1
+* Transient analysis
+V1 in 0 PULSE(0 1 0 20ps 20ps)
+.tran 1ps 200ps
 
 .control
 run
-plot V(in) V(out)
-let slope=deriv(V(out))
+plot V(out2)
+plot V(in) V(out2)
+let slope=deriv(V(out2))
 plot slope
 .endc
 .end
